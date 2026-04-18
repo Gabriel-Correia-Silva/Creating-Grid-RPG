@@ -60,3 +60,17 @@ jobs:
         name: grid-generator-binaries
         path: dist/
         retention-days: 7
+    
+    - name: Upload Artifact Linux
+      uses: actions/upload-artifact@v4
+      with:
+        name: GridGenerator-linux
+        path: dist/GridGenerator-linux
+        retention-days: 7
+        
+    - name: Upload Artifact Windows
+      uses: actions/upload-artifact@v4
+      with:
+        name: GridGenerator-windows
+        path: dist/GridGenerator-windows.exe
+        retention-days: 7
