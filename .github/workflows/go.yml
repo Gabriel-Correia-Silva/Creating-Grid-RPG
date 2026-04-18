@@ -1,0 +1,60 @@
+name: Test and Build Executables
+
+on:
+  push:
+    branches: ["main"]
+    tags: 'v.*.*.*'
+  pull_request:
+    branches: ["main"]
+    
+permissions:
+  contents: write
+
+jobs:
+  ci_pipeline:
+    name: Pipeline CI/CD (Test & Build)
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.26' 
+        
+    - name: Download Dependencies
+      run: go mod download
+
+    - name: Run Go Vet
+      run: go vet ./...
+      
+    - name: Run Tests
+    
+      run: go test -v ./...
+
+    - name: Build Linux
+      run: |
+        GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/GridGenerator-linux main.go
+        chmod +x dist/GridGenerator-linux
+
+    - name: Build Windows
+      run: |
+        GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o dist/GridGenerator-windows.exe main.go
+
+    - name: Publish Github Realese
+      if: startsWith(github.ref, 'refs/tags')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          dist/GridGenerator-linux
+          dist/GridGenerator-windows.exe
+        generate_realese_notes: true
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: grid-generator-binaries
+        path: dist/
+        retention-days: 7
