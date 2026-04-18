@@ -32,26 +32,27 @@ jobs:
       run: go vet ./...
       
     - name: Run Tests
-    
       run: go test -v ./...
 
     - name: Build Linux
       run: |
+        mkdir -p dist
         GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/GridGenerator-linux main.go
         chmod +x dist/GridGenerator-linux
 
     - name: Build Windows
       run: |
+        mkdir -p dist
         GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o dist/GridGenerator-windows.exe main.go
 
-    - name: Publish Github Realese
-      if: startsWith(github.ref, 'refs/tags')
+    - name: Publish Github Release
+      if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
         files: |
           dist/GridGenerator-linux
           dist/GridGenerator-windows.exe
-        generate_realese_notes: true
+        generate_release_notes: true
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
