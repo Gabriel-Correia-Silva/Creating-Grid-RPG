@@ -112,11 +112,10 @@ func promptLineWidth(r *bufio.Reader) float64 {
 
 func promptLineColor(r *bufio.Reader) config.RGB {
 	fmt.Println("\n--- 6. COR DA LINHA ---")
-	fmt.Println("1: Cinza Claro | 2: Preto | 3: Azul | 4: Vermelho")
-	fmt.Println("5: Verde | 6: Branco | 7: Customizada (RGB)")
+	fmt.Println("1: Cinza Claro | 2: Preto | 3: Branco | 4: Customizada (RGB)")
 	fmt.Print("Escolha: ")
 	choice := input.ReadInt(r)
-	if choice == 7 {
+	if choice == 4 {
 		return colors.ReadRGB(r, "linha")
 	}
 	return colors.LineFromPreset(choice)
@@ -134,11 +133,10 @@ func promptLineOpacity(r *bufio.Reader) float64 {
 
 func promptBackgroundColor(r *bufio.Reader) *config.RGB {
 	fmt.Println("\n--- 8. COR DE FUNDO ---")
-	fmt.Println("1: Branco (padrão) | 2: Amarelo Claro | 3: Azul Claro")
-	fmt.Println("4: Preto | 5: Customizada (RGB)")
+	fmt.Println("1: Branco (padrão) | 2: Preto | 3: Customizada (RGB)")
 	fmt.Print("Escolha: ")
 	choice := input.ReadInt(r)
-	if choice == 5 {
+	if choice == 3 {
 		c := colors.ReadRGB(r, "fundo")
 		return &c
 	}
@@ -173,8 +171,8 @@ func promptOutputFile(r *bufio.Reader, isPDF bool) string {
 
 func PrintHeader() {
 	fmt.Println("============================================")
-	fmt.Println("   GERADOR DE GRID - MODO AVANÇADO v3.0    ")
-	fmt.Println("   (Go Edition — Cross-platform)           ")
+	fmt.Println("              GERADOR DE GRID               ")
+	fmt.Println("              (Cross-platform)              ")
 	fmt.Println("============================================")
 	fmt.Println()
 }

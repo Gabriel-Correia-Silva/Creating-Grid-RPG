@@ -11,16 +11,11 @@ import (
 var linePresets = map[int]config.RGB{
 	1: {R: 200, G: 200, B: 200},
 	2: {R: 0, G: 0, B: 0},
-	3: {R: 0, G: 100, B: 255},
-	4: {R: 220, G: 30, B: 30},
-	5: {R: 30, G: 180, B: 30},
-	6: {R: 255, G: 255, B: 255},
+	3: {R: 255, G: 255, B: 255},
 }
 
 var backgroundPresets = map[int]config.RGB{
-	2: {R: 255, G: 255, B: 210},
-	3: {R: 210, G: 230, B: 255},
-	4: {R: 30, G: 30, B: 30},
+	2: {R: 30, G: 30, B: 30},
 }
 
 func LineFromPreset(choice int) config.RGB {
